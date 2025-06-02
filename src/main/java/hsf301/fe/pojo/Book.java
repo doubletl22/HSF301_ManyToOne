@@ -39,7 +39,6 @@ public class Book {
         this.isbn = isbn;
     }
 
-    // Getters and Setters for all fields (id, title, author, isbn, student)
     public Long getId() {
         return id;
     }

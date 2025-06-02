@@ -1,7 +1,6 @@
 package hsf301.fe.repository;
 
 import hsf301.fe.pojo.Student;
-
 import java.util.List;
 
 public interface IStudentRepository {

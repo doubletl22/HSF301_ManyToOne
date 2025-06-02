@@ -1,7 +1,6 @@
 package hsf301.fe.service;
 
 import hsf301.fe.pojo.Student;
-
 import java.util.List;
 
 public interface IStudentService {

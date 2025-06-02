@@ -1,13 +1,8 @@
 package hsf301.fe.repository;
 
 import java.util.List;
-// Assuming hsf301.fe.dao.StudentDAO is the correct import for StudentDAO
 import hsf301.fe.dao.StudentDAO;
-// Assuming hsf301.fe.pojo.Student is the correct import for Student
 import hsf301.fe.pojo.Student;
-// Assuming IStudentRepository is an interface in the same or an imported package
-// import hsf301.fe.repository.IStudentRepository;
-
 
 public class StudentRepository implements IStudentRepository {
     private StudentDAO studentDAO = null;
@@ -29,19 +24,16 @@ public class StudentRepository implements IStudentRepository {
     }
 
     @Override
-    public void delete(Long studentID) { // Phương thức này nhận Long studentID
+    public void delete(Long studentID) {
         if (studentID == null) {
             System.out.println("Error: Student ID for deletion is null.");
             return;
         }
-        // 1. Sử dụng findById để lấy đối tượng Student từ studentID
-        Student studentToDelete = this.findById(studentID); // Hoặc studentDAO.findById(studentID) nếu bạn muốn gọi trực tiếp DAO
+        Student studentToDelete = this.findById(studentID);
 
         if (studentToDelete != null) {
-            // 2. Gọi studentDAO.delete() với đối tượng Student đã tìm được
             studentDAO.delete(studentToDelete);
         } else {
-            // Xử lý trường hợp không tìm thấy sinh viên với ID cung cấp
             System.out.println("Student with ID " + studentID + " not found. Nothing to delete.");
         }
     }

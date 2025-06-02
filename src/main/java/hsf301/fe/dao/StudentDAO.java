@@ -10,7 +10,7 @@ import javax.persistence.Persistence;
 
 public class StudentDAO {
 
-    private static EntityManagerFactory emf; // Made static as per image
+    private static EntityManagerFactory emf;
     private EntityManager em;
 
     public StudentDAO(String persistanceName) {
@@ -21,7 +21,7 @@ public class StudentDAO {
         try {
             em = emf.createEntityManager();
             em.getTransaction().begin();
-            em.merge(student); // Using merge for save/update behavior
+            em.merge(student);
             em.getTransaction().commit();
         } catch (Exception ex) {
             em.getTransaction().rollback();
@@ -46,29 +46,23 @@ public class StudentDAO {
         return students;
     }
     public void delete(Student student) {
-        // Kiểm tra xem student có null không trước khi cố gắng lấy ID
-        if (student == null || student.getId() == 0) { // Hoặc student.getId() == null nếu ID là kiểu đối tượng Long
+        if (student == null || student.getId() == 0) {
             System.out.println("Error: Student object is null or has no ID.");
             return;
         }
 
-        EntityManager em = null; // Khai báo ở đây để có thể truy cập trong finally
+        EntityManager em = null;
         try {
             em = emf.createEntityManager();
             em.getTransaction().begin();
 
-            // Tìm thực thể trong persistence context bằng ID lấy từ đối tượng student
-            // Giả sử Student có phương thức getId() trả về kiểu phù hợp (ví dụ int hoặc Long)
             Student managedStudent = em.find(Student.class, student.getId());
 
             if (managedStudent != null) {
-                em.remove(managedStudent); // Xóa thực thể đã được quản lý
+                em.remove(managedStudent);
                 em.getTransaction().commit();
             } else {
-                // Nếu không tìm thấy, có thể không cần commit hoặc rollback,
-                // nhưng nên thông báo rằng không tìm thấy đối tượng để xóa.
                 System.out.println("Student with ID " + student.getId() + " not found in database.");
-                // Nếu đã begin transaction, bạn có thể muốn rollback ở đây nếu không có gì khác để commit.
                 if (em.getTransaction().isActive()) {
                     em.getTransaction().rollback();
                 }
@@ -76,11 +70,11 @@ public class StudentDAO {
         } catch (Exception ex) {
             System.out.println("Error deleting student: " + ex.getMessage());
             if (em != null && em.getTransaction().isActive()) {
-                em.getTransaction().rollback(); // Rollback transaction nếu có lỗi
+                em.getTransaction().rollback();
             }
         } finally {
             if (em != null) {
-                em.close(); // Luôn đóng EntityManager
+                em.close();
             }
         }
     }

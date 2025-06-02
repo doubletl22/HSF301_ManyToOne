@@ -21,7 +21,7 @@ public class Student {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "firstName", nullable = false, unique = true) // unique=true có thể gây vấn đề nếu nhiều student có cùng tên
+    @Column(name = "firstName", nullable = false, unique = true)
     private String firstName;
 
     @Column(name = "lastName")
@@ -30,7 +30,6 @@ public class Student {
     @Column(name = "marks")
     private int marks;
 
-    // Giả sử bạn đã sửa @OneToMany như thảo luận (ví dụ: thêm mappedBy)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "student")
     private Set<Book> books = new HashSet<>();
 
@@ -45,7 +44,6 @@ public class Student {
         this.books = new HashSet<>();
     }
 
-    // Thêm phương thức getter cho id
     public int getId() {
         return this.id;
     }
@@ -54,7 +52,6 @@ public class Student {
         this.id = id;
     }
 
-    // Bạn cũng nên có getters và setters cho các trường khác
     public String getFirstName() {
         return firstName;
     }
