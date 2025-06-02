@@ -1,0 +1,89 @@
+package hsf301.fe.pojo;
+
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+
+@Entity
+@Table(name = "STUDENTS")
+public class Student {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private int id;
+
+    @Column(name = "firstName", nullable = false, unique = true) // unique=true có thể gây vấn đề nếu nhiều student có cùng tên
+    private String firstName;
+
+    @Column(name = "lastName")
+    private String lastName;
+
+    @Column(name = "marks")
+    private int marks;
+
+    // Giả sử bạn đã sửa @OneToMany như thảo luận (ví dụ: thêm mappedBy)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "student")
+    private Set<Book> books = new HashSet<>();
+
+    public Student() {
+    }
+
+
+    public Student(String firstName, String lastName, int marks) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.marks = marks;
+        this.books = new HashSet<>();
+    }
+
+    // Thêm phương thức getter cho id
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    // Bạn cũng nên có getters và setters cho các trường khác
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public int getMarks() {
+        return marks;
+    }
+
+    public void setMarks(int marks) {
+        this.marks = marks;
+    }
+
+    public Set<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(Set<Book> books) {
+        this.books = books;
+    }
+}
